@@ -6,12 +6,12 @@
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
 			"server": "project-one-server.database.windows.net",
-			"database": "LOGS",
+			"database": "Project1-retail",
 			"encrypt": "mandatory",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
 			"userName": "chaitu",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQERENDhDOUI1LUU4QjUtNDBCQS04QTExLThFOEM2MkJCMDQyMV9mYzQyNDljOC03YWY4LTQyNDAtOTc1OC1kZjdlNGRmZjI4NWUiDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQERENDhDOUI1LUU4QjUtNDBCQS04QTExLThFOEM2MkJCMDQyMV9hYzM3ODg3My1hODhmLTQ3ZTEtYWI1YS1lNTRiMGZlNWY5NmIiDQp9"
 		}
 	}
 }
