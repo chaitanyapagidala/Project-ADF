@@ -1,0 +1,15 @@
+{
+	"name": "adf-retail-test",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "69f9af2b-2ad1-4b26-9ae0-7f0426c9b02e",
+		"tenantId": "ba9f0a2c-85be-441d-819e-4f22051afca2"
+	}
+}

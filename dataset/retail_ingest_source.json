@@ -1,0 +1,126 @@
+{
+	"name": "retail_ingest_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ingest_files_tets",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sales_uk_retail_pos_20260902_001.csv",
+				"folderPath": "sales",
+				"fileSystem": "incoming"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "transaction_id",
+				"type": "String"
+			},
+			{
+				"name": "transaction_date",
+				"type": "String"
+			},
+			{
+				"name": "customer_id",
+				"type": "String"
+			},
+			{
+				"name": "customer_name",
+				"type": "String"
+			},
+			{
+				"name": "customer_type",
+				"type": "String"
+			},
+			{
+				"name": "store_id",
+				"type": "String"
+			},
+			{
+				"name": "store_name",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			},
+			{
+				"name": "country",
+				"type": "String"
+			},
+			{
+				"name": "product_id",
+				"type": "String"
+			},
+			{
+				"name": "product_name",
+				"type": "String"
+			},
+			{
+				"name": "category",
+				"type": "String"
+			},
+			{
+				"name": "quantity",
+				"type": "String"
+			},
+			{
+				"name": "unit_price",
+				"type": "String"
+			},
+			{
+				"name": "gross_amount",
+				"type": "String"
+			},
+			{
+				"name": "discount_percent",
+				"type": "String"
+			},
+			{
+				"name": "discount_amount",
+				"type": "String"
+			},
+			{
+				"name": "tax_amount",
+				"type": "String"
+			},
+			{
+				"name": "net_sales_amount",
+				"type": "String"
+			},
+			{
+				"name": "currency",
+				"type": "String"
+			},
+			{
+				"name": "sales_channel",
+				"type": "String"
+			},
+			{
+				"name": "payment_method",
+				"type": "String"
+			},
+			{
+				"name": "transaction_status",
+				"type": "String"
+			},
+			{
+				"name": "source_system",
+				"type": "String"
+			},
+			{
+				"name": "ingestion_batch_id",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
