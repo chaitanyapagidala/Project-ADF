@@ -22,10 +22,12 @@
 					"fieldList": [
 						"exists",
 						"size",
-						"lastModified"
+						"lastModified",
+						"columnCount"
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -62,7 +64,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "v_ProcessMessage",
-								"value": "@if(\n    not(activity('Get_Metadata_Source_File').output.exists),\n    'REJECTED - Source file does not exist',\n    if(\n        equals(activity('Get_Metadata_Source_File').output.size, 0),\n        'REJECTED - Source file is empty',\n        if(\n            activity('Get_Metadata_Target_File').output.exists,\n            'SKIPPED - Target file already exists',\n            'SKIPPED - File validation failed'\n        )\n    )\n)"
+								"value": {
+									"value": "@if(\n    not(activity('Get_Metadata_Source_File').output.exists),\n    'REJECTED - Source file does not exist',\n    if(\n        equals(activity('Get_Metadata_Source_File').output.size, 0),\n        'REJECTED - Source file is empty',\n        if(\n            activity('Get_Metadata_Target_File').output.exists,\n            'SKIPPED - Target file already exists',\n            'SKIPPED - File validation failed'\n        )\n    )\n)",
+									"type": "Expression"
+								}
 							}
 						}
 					],
@@ -159,14 +164,104 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
 					}
 				}
+			},
+			{
+				"name": "Insert_ETL_Audit",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "File_exists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[Logs].[usp_Insert_ETL_Audit]",
+					"storedProcedureParameters": {
+						"PipelineName": {
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PipelineRunID": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"FileName": {
+							"value": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"SourcePath": {
+							"value": "your-source-folder-path",
+							"type": "String"
+						},
+						"TargetPath": {
+							"value": "your-target-folder-path",
+							"type": "String"
+						},
+						"ProcessStartTime": {
+							"value": {
+								"value": "@utcnow()",
+								"type": "Expression"
+							},
+							"type": "DateTime"
+						},
+						"Status": {
+							"value": "Succeeded",
+							"type": "String"
+						},
+						"ErrorMessage": {
+							"value": {
+								"value": "@variables('v_ProcessMessage')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"RowsCopied": {
+							"value": {
+								"value": "@activity('Get_Metadata_Source_File').output.columnCount",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "Projectsql_1_LK",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
+		"parameters": {
+			"FileName": {
+				"type": "String",
+				"defaultValue": "@pipeline().parameters.FileName"
+			}
+		},
 		"variables": {
 			"v_ErrorMessage": {
 				"type": "String"

@@ -1,0 +1,70 @@
+{
+	"name": "LS_AzureSQL_Audit",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Projectsql_1_LK",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "AuditID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "PipelineName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PipelineRunID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FileName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SourcePath",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TargetPath",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FileSize",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ProcessStartTime",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "ProcessEndTime",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ErrorMessage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RowsCopied",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "Logs",
+			"table": "ETL_File_Audit"
+		}
+	}
+}
