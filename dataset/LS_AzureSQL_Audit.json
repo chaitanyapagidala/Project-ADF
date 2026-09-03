@@ -1,0 +1,16 @@
+{
+	"name": "LS_AzureSQL_Audit",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ProjectoneDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "LOGS",
+			"table": "ETL_File_Audit"
+		}
+	}
+}
