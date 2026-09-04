@@ -154,13 +154,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "retail_ingest_source",
+						"referenceName": "retai_target",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
-						"exists",
-						"size",
-						"lastModified"
+						"exists"
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
@@ -177,7 +175,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "File_exists",
+						"activity": "Wait 20 secs",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -253,6 +251,22 @@
 				"linkedServiceName": {
 					"referenceName": "Projectsql_1_LK",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Wait 20 secs",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "File_exists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 20
 				}
 			}
 		],

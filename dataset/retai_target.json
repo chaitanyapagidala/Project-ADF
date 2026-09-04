@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "sales_uk_retail_pos_20260902_001.csv",
 				"folderPath": "sales",
 				"fileSystem": "bronze"
 			},
