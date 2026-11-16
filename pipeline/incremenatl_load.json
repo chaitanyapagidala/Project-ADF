@@ -63,24 +63,118 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "FE_Process_Retail_Files",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FL_Filter_CSV_Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FL_Filter_CSV_Files').output.value\r\n\r\n\r\n",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "CP_Source_To_silver",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_ADLS_Source_CSV",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_Container": "@pipeline().parameters.p_SourceContainer",
+										"p_FolderPath": "@pipeline().parameters.p_SourceFolder",
+										"p_FileName": "@string('')"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLS_Silver_CSV",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_Container": "@pipeline().parameters.p_TargetContainer",
+										"p_FolderPath": "@pipeline().parameters.p_TargetFolder",
+										"p_FileName": "@item().name"
+									}
+								}
+							]
+						}
+					]
+				}
 			}
 		],
 		"parameters": {
 			"p_SourceContainer": {
 				"type": "string",
-				"defaultValue": "landing"
+				"defaultValue": "bronze-processing"
 			},
 			"p_SourceFolder": {
 				"type": "string",
-				"defaultValue": "retail/sales"
+				"defaultValue": "sales"
 			},
 			"p_TargetContainer": {
 				"type": "string",
-				"defaultValue": "bronze"
+				"defaultValue": "silver-processed"
 			},
 			"p_FileExtension": {
 				"type": "string",
 				"defaultValue": ".csv"
+			},
+			"p_TargetFolder": {
+				"type": "string",
+				"defaultValue": "sales"
 			}
 		},
 		"annotations": []
