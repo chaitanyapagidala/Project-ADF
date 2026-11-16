@@ -26,7 +26,8 @@
 							"p_FolderPath": {
 								"value": "@pipeline().parameters.p_SourceFolder",
 								"type": "Expression"
-							}
+							},
+							"p_FileName": "@string('')"
 						}
 					},
 					"fieldList": [
@@ -135,7 +136,7 @@
 									"parameters": {
 										"p_Container": "@pipeline().parameters.p_SourceContainer",
 										"p_FolderPath": "@pipeline().parameters.p_SourceFolder",
-										"p_FileName": "@string('')"
+										"p_FileName": "@item().name"
 									}
 								}
 							],
